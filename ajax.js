@@ -1,0 +1,1 @@
+const rutbackend = "https://backend.example.com/api"

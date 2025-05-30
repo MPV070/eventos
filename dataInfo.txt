@@ -1,0 +1,19 @@
+lyric-menu.great-site.net
+username: if0_38822683
+password: f5skDmqmjXFP
+--
+Label
+Website for lyric-menu.great-site.net
+
+Website IP
+(unknown)
+
+Hosting Volume
+vol5_2
+
+Home Directory
+/home/vol5_2/infinityfree.com/if0_38822683
+
+Creation Date
+2025-04-24
+--

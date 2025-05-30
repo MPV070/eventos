@@ -1,0 +1,46 @@
+body {
+    background-color: #44595e;
+}
+
+
+.navbar-brand {
+    font-family: "Merriweather", serif;
+    font-optical-sizing: 150%;
+    font-weight: 400; /* Replace <weight> with a valid value */
+    font-style: normal;
+    font-variation-settings: "wdth" 200;
+}
+
+.btn-bd-cards {
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: var(--bs-white);
+    --bs-btn-bg: #c3b77c;
+    --bs-btn-border-color: #ccbc6b;
+    --bs-btn-hover-color: var(--bs-white);
+    --bs-btn-hover-bg: #8c8566; /* Slightly darker shade of #76B18E */
+    --bs-btn-hover-border-color: #9c8f52;
+    --bs-btn-focus-shadow-rgb: 118, 177, 142; /* RGB equivalent of #76B18E */
+    --bs-btn-active-color: var(--bs-btn-hover-color);
+    --bs-btn-active-bg: #6b654b; /* Even darker shade of #76B18E */
+    --bs-btn-active-border-color: #7c7141;
+    position: relative;
+    display: flexbox;
+    align-items: baseline;
+}
+
+
+form {
+    background-color: #57828d;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .dropdown-menu {
+    left: -49px;
+}
+
+
+form label {
+    color: #eff2f5; /* Cambia este código de color al que desees */
+  }

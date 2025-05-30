@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lyric menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
+      </head>
+  <body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4e001d">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">LYRIC MENU</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarColor01">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Inicio
+          <span class="visually-hidden">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Reservas</a>
+            </li>
+            <li class="nav-item dropdown">
+              <button class="btn dropdown-toggle text-white" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: transparent; border: none;">
+                Registro
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="#">Registrar usuario</a></li>
+                <li><a class="dropdown-item" href="#">Registrar evento</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+           
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Carrusel de 3 eventos importantes -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="imgs/romeoYjulieta.jpg" class="d-block w-80 img-fluid" alt="Romeo y Julieta">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Romeo y Julieta</h5>
+            <p>Redescubre esta clásica historia de amor, especial para jóvenes audiencias.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="imgs/tosca.jpg" class="d-block w-80 img-fluid" alt="Tosca">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Tosca</h5>
+            <p>Una apasionante ópera de Puccini que mezcla intriga política, amor y traición en la Roma del siglo XIX.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="imgs/La del manojo de rosas.jpg" class="w-80 img-fluid" alt="La del manojo de rosas">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>La del manojo de rosas</h5>
+            <p>Una zarzuela cómica que gira en torno a enredos amorosos en el Madrid de principios del siglo XX, mezclando humor, música y tradición.</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <!-- Tarjetas de eventos destacados -->
+    <div class="container mt-4">
+      <div class="row g-3">
+        <!-- Card 1 -->
+        <div class="col-md-4 d-flex">
+          <div class="card h-100 d-flex flex-column">
+            <img src="imgs/romeoYjulieta.jpg" class="card-img-top" alt="Romeo y Julieta">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Romeo y Julieta</h5>
+              <p class="card-text">Redescubre esta clásica historia de amor, especial para jóvenes audiencias.</p>
+              <button type="button" class="btn btn-lg btn-bd-cards mt-auto" data-bs-toggle="popover" data-bs-trigger="focus" title="Sesiones" data-bs-content='<a href="https://example.com" target="_blank">Enlace 1</a><br><a href="https://another-example.com" target="_blank">Enlace 2</a>'>Más información</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-md-4 d-flex">
+          <div class="card h-100">
+            <img src="imgs/tosca.jpg" class="card-img-top" alt="Tosca">
+            <div class="card-body">
+              <h5 class="card-title">Tosca</h5>
+              <p class="card-text">Una apasionante ópera de Puccini que mezcla intriga política, amor y traición en la Roma del siglo XIX.</p>
+              <button type="button" class="btn btn-lg btn-bd-cards" data-bs-toggle="popover" data-bs-trigger="focus" title="Información del evento" data-bs-content='<a href="https://example.com" target="_blank">Enlace 1</a><br><a href="https://another-example.com" target="_blank">Enlace 2</a>'>Click to toggle popover</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-4 d-flex">
+          <div class="card h-100">
+            <img src="imgs/La del manojo de rosas.jpg" class="card-img-top" alt="La del manojo de rosas">
+            <div class="card-body">
+              <h5 class="card-title">La del manojo de rosas</h5>
+              <p class="card-text">Una zarzuela cómica que gira en torno a enredos amorosos en el Madrid de principios del siglo XX.</p>
+              <button type="button" class="btn btn-lg btn-bd-cards" data-bs-toggle="popover" data-bs-trigger="focus" title="Información del evento" data-bs-content='<a href="https://example.com" target="_blank">Enlace 1</a><br><a href="https://another-example.com" target="_blank">Enlace 2</a>'>Click to toggle popover</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert container -->
+    <div id="alert-container" class="mt-4"></div>
+
+    <!-- Formulario para añadir eventos -->
+    <form class="w-50 mx-auto m-4">
+      <!-- Nombre del evento -->
+      <div class="mb-3">
+      <label for="eventName" class="form-label">Nombre del evento</label>
+      <input type="text" class="form-control" id="eventName" placeholder="Nombre del evento" aria-label="EventName">
+      </div>
+      <!-- Imagen del evento -->
+      <div class="mb-3">
+      <label for="eventImg" class="form-label">Imagen del evento</label>
+      <input type="text" class="form-control" id="eventImg" placeholder="URL de la imagen del evento" aria-label="EventImg">
+      </div>
+      <!-- Descripción del evento -->
+      <div class="mb-3">
+      <label for="eventDescription" class="form-label">Descripción del evento</label>
+      <textarea class="form-control" id="eventDescription" rows="3" placeholder="Descripción del evento"></textarea>
+      </div>
+      <!-- Ubicación del evento -->
+      <div class="mb-3">
+      <label for="eventLocation" class="form-label">Ubicación del evento</label>
+      <input type="text" class="form-control" id="eventLocation" placeholder="Ubicación del evento" aria-label="EventLocation">
+      </div>
+      <!-- Fecha del evento -->
+      <div class="mb-3 d-flex justify-content-between">
+      <div class="me-2 w-50">
+        <label for="eventDate" class="form-label">Fecha del evento</label>
+        <input type="date" class="form-control" id="eventDate" aria-label="EventDate">
+      </div>
+      <!-- Hora del evento -->
+      <div class="ms-2 w-50">
+        <label for="eventTime" class="form-label">Hora del evento</label>
+        <input type="time" class="form-control" id="eventTime" aria-label="EventTime">
+      </div>
+      </div>
+      <div class="mb-3 d-flex justify-content-between">
+      <!-- Precio del evento -->
+      <div class="me-2 w-50">
+        <label for="eventPrice" class="form-label">Precio del evento</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="eventPrice" placeholder="Precio del evento" aria-label="EventPrice" step="0.01" min="0">
+          <span class="input-group-text bg-light">€</span>
+        </div>
+      </div>
+      <!-- Plazas disponibles -->
+      <div class="ms-2 w-50">
+        <label for="eventSeats" class="form-label">Plazas disponibles</label>
+        <input type="number" class="form-control" id="eventSeats" placeholder="Número de plazas disponibles" aria-label="EventSeats">
+      </div>
+      </div>
+    
+
+      <button type="submit" class="btn btn-primary btn-bd-cards">Submit</button>
+    </form>
+
+    <!-- Formmulario para añadir personas -->
+    <form class="w-50 mx-auto m-4">
+      <!-- Nombre del usuario -->
+      <div class="mb-3 d-flex"></div>
+        <label for="name" class="form-label">Nombre de usuario u organización</label>
+        <input type="text" class="form-control" placeholder="Nombre" aria-label="name" aria-describedby="nombre" id="name" autocomplete="name"> 
+      </div>
+      <!-- Email del usuario-->
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <!-- Contraseña del usuario -->
+      <div class="mb-4">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1">
+      </div>
+      <div class="mb-4 form-check">
+        <input type="checkbox" class="form-check-input" id="organizadorEventos">
+        <label class="form-check-label" for="organizadorEventos" >Soy un organizador de eventos</label>
+      </div>
+      <!--Alert -->
+        <!-- hay que añadir que cuando el usuario marque la casilla de organizador de eventos, no pueda añadir personas, solo eventos. -->
+    
+      <div id="alert-container" class="mt-4"></div>
+      <button type="submit" class="btn btn-primary btn-bd-cards">Submit</button>
+    </form>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+      <div class="container">
+        <p class="mb-1">© 2025 Lyric Menu. Todos los derechos reservados.</p>
+        <p class="mb-0">
+          Síguenos en:
+          <a href="https://twitter.com" target="_blank" class="text-white mx-2"><i class="bi bi-github"></i> GitHub</a> |
+          <a href="https://instagram.com" target="_blank" class="text-white mx-2"><i class="bi bi-LinkedIn"></i> LinkedIn</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

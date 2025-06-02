@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             `;
         } else {
-            alertContainer.innerHTML = 'error al cargar el mensaje de alerta.'; 
+            alertContainer.innerHTML = ''; 
         }
     });
 });

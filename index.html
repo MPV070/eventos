@@ -33,14 +33,10 @@
               <button class="btn dropdown-toggle text-white" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: transparent; border: none;">
                 Registro
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="#">Registrar usuario</a></li>
-                <li><a class="dropdown-item" href="#">Registrar evento</a></li>
+                <li><a class="dropdown-item" href="registro_usuario.html">Registrar usuario</a></li>
+                <li><a class="dropdown-item" href="registro_evento.html">Registrar evento</a></li>
               </ul>
             </li>
-          </ul>
-        </div>
-
-           
           </ul>
         </div>
       </div>
@@ -130,96 +126,14 @@
     <!-- Alert container -->
     <div id="alert-container" class="mt-4"></div>
 
-    <!-- Formulario para añadir eventos -->
-    <form class="w-50 mx-auto m-4">
-      <!-- Nombre del evento -->
-      <div class="mb-3">
-      <label for="eventName" class="form-label">Nombre del evento</label>
-      <input type="text" class="form-control" id="eventName" placeholder="Nombre del evento" aria-label="EventName">
-      </div>
-      <!-- Imagen del evento -->
-      <div class="mb-3">
-      <label for="eventImg" class="form-label">Imagen del evento</label>
-      <input type="text" class="form-control" id="eventImg" placeholder="URL de la imagen del evento" aria-label="EventImg">
-      </div>
-      <!-- Descripción del evento -->
-      <div class="mb-3">
-      <label for="eventDescription" class="form-label">Descripción del evento</label>
-      <textarea class="form-control" id="eventDescription" rows="3" placeholder="Descripción del evento"></textarea>
-      </div>
-      <!-- Ubicación del evento -->
-      <div class="mb-3">
-      <label for="eventLocation" class="form-label">Ubicación del evento</label>
-      <input type="text" class="form-control" id="eventLocation" placeholder="Ubicación del evento" aria-label="EventLocation">
-      </div>
-      <!-- Fecha del evento -->
-      <div class="mb-3 d-flex justify-content-between">
-      <div class="me-2 w-50">
-        <label for="eventDate" class="form-label">Fecha del evento</label>
-        <input type="date" class="form-control" id="eventDate" aria-label="EventDate">
-      </div>
-      <!-- Hora del evento -->
-      <div class="ms-2 w-50">
-        <label for="eventTime" class="form-label">Hora del evento</label>
-        <input type="time" class="form-control" id="eventTime" aria-label="EventTime">
-      </div>
-      </div>
-      <div class="mb-3 d-flex justify-content-between">
-      <!-- Precio del evento -->
-      <div class="me-2 w-50">
-        <label for="eventPrice" class="form-label">Precio del evento</label>
-        <div class="input-group">
-          <input type="number" class="form-control" id="eventPrice" placeholder="Precio del evento" aria-label="EventPrice" step="0.01" min="0">
-          <span class="input-group-text bg-light">€</span>
-        </div>
-      </div>
-      <!-- Plazas disponibles -->
-      <div class="ms-2 w-50">
-        <label for="eventSeats" class="form-label">Plazas disponibles</label>
-        <input type="number" class="form-control" id="eventSeats" placeholder="Número de plazas disponibles" aria-label="EventSeats">
-      </div>
-      </div>
-    
-
-      <button type="submit" class="btn btn-primary btn-bd-cards">Submit</button>
-    </form>
-
-    <!-- Formmulario para añadir personas -->
-    <form class="w-50 mx-auto m-4">
-      <!-- Nombre del usuario -->
-      <div class="mb-3 d-flex"></div>
-        <label for="name" class="form-label">Nombre de usuario u organización</label>
-        <input type="text" class="form-control" placeholder="Nombre" aria-label="name" aria-describedby="nombre" id="name" autocomplete="name"> 
-      </div>
-      <!-- Email del usuario-->
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-      </div>
-      <!-- Contraseña del usuario -->
-      <div class="mb-4">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
-      </div>
-      <div class="mb-4 form-check">
-        <input type="checkbox" class="form-check-input" id="organizadorEventos">
-        <label class="form-check-label" for="organizadorEventos" >Soy un organizador de eventos</label>
-      </div>
-      <!--Alert -->
-        <!-- hay que añadir que cuando el usuario marque la casilla de organizador de eventos, no pueda añadir personas, solo eventos. -->
-    
-      <div id="alert-container" class="mt-4"></div>
-      <button type="submit" class="btn btn-primary btn-bd-cards">Submit</button>
-    </form>
-
-    <footer class="bg-dark text-white text-center py-4 mt-5">
+         
+    <footer class="bg-dark text-white text-center py-4 mt-5 bottom-centered">
       <div class="container">
         <p class="mb-1">© 2025 Lyric Menu. Todos los derechos reservados.</p>
         <p class="mb-0">
           Síguenos en:
-          <a href="https://twitter.com" target="_blank" class="text-white mx-2"><i class="bi bi-github"></i> GitHub</a> |
-          <a href="https://instagram.com" target="_blank" class="text-white mx-2"><i class="bi bi-LinkedIn"></i> LinkedIn</a>
+          <a href="https://github.com/MPV070/eventos" target="_blank" class="text-white mx-2"><i class="bi bi-github"></i>GitHub</a> |
+          <a href="https://www.linkedin.com/in/maría-pérez-vaca-6b0231341" target="_blank" class="text-white mx-2"><i class="bi bi-LinkedIn"></i>LinkedIn</a>
         </p>
       </div>
     </footer>

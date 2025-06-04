@@ -45,3 +45,9 @@ form label {
     color: #eff2f5; /* Cambia este código de color al que desees */
   }
 
+
+#tableImg {
+    width: 30px;
+    height: 30px;
+    object-fit: cover; /* Evita distorsiones en la imagen */
+}

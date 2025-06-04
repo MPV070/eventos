@@ -46,8 +46,15 @@ form label {
   }
 
 
-#tableImg {
+.table-img {
     width: 30px;
     height: 30px;
-    object-fit: cover; /* Evita distorsiones en la imagen */
+    object-fit: cover;
+}
+
+.table-img img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
 }

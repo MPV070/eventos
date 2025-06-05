@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
       </head>
   <body>
-    <!-- Barra de navegación -->
+        <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4e001d">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">LYRIC MENU</a>
@@ -22,20 +22,22 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarColor01">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Inicio
+              <a class="nav-link active" href="index.html">Inicio
           <span class="visually-hidden">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Reservas</a>
+              <a class="nav-link" href="tabla_listados.html">Reservas</a>
             </li>
             <li class="nav-item dropdown">
-              <button class="btn dropdown-toggle text-white" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: transparent; border: none;">
-                Registro
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="registro_usuario.html">Registrar usuario</a></li>
-                <li><a class="dropdown-item" href="registro_evento.html">Registrar evento</a></li>
-              </ul>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+     data-bs-toggle="dropdown" aria-expanded="false">
+    Registro
+  </a>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+    <li><a class="dropdown-item" href="#">Registrar usuario</a></li>
+    <li><a class="dropdown-item" href="registro_evento.html">Registrar evento</a></li>
+  </ul>
             </li>
           </ul>
         </div>

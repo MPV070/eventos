@@ -46,13 +46,13 @@ form label {
   }
 
 
-.table-img {
+.tableImg {
     width: 30px;
     height: 30px;
     object-fit: cover;
 }
 
-.table-img img {
+.tableImg img {
     width: 60px;
     height: 60px;
     object-fit: cover;

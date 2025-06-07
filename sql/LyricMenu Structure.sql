@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 04-06-2025 a las 08:59:51
+-- Tiempo de generación: 05-06-2025 a las 08:01:53
 -- Versión del servidor: 8.0.41
 -- Versión de PHP: 8.2.27
 
@@ -40,14 +40,6 @@ CREATE TABLE `evento` (
   `plazas_totales` int NOT NULL
 ) ;
 
---
--- Volcado de datos para la tabla `evento`
---
-
-INSERT INTO `evento` (`id`, `nombre`, `url_imagen`, `descripcion`, `ubicacion`, `fecha`, `hora`, `precio`, `plazas_disponibles`, `plazas_totales`) VALUES
-(1, 'Romeo y Julieta', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.nytimes.com%2F2016%2F12%2F29%2Farts%2Fmusic%2Fmetropolitan-opera-bartlett-sher-gounod-romeo-et-juliette.html&psig=AOvVaw3gHB3aE_QjoF-Obbx2LwZu&ust=1748519022604000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCPDliIyLxo0DFQAAAAAdAAAAABAE', 'Redescubre esta clásica historia de amor, especial para jóvenes audiencias.', 'Maestranza de Sevilla. Paseo de Cristóbal Colón, 22, 41001, Sevilla.', '2025-07-17', '20:30:00', 12.95, 200, 200),
-(4, 'Tosca', 'https://www.google.com/url?sa=i&url=http%3A%2F%2Fpantallasonora.blogspot.com%2F2023%2F06%2Funa-tosca-deslumbrante-en-lo-escenico-y.html&psig=AOvVaw1QxA410lrjWmC5moFHiL_X&ust=1748520032997000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCNjZm-6Oxo0DFQAAAAAdAAAAABAT', 'Una apasionante ópera de Puccini que mezcla intriga política, amor y traición en la Roma del siglo XIX.', 'Teatro de la Maestranza. Paseo de Cristóbal Colón, 22, 41001, Sevilla.', '2025-05-30', '21:30:00', 50.00, 200, 200);
-
 -- --------------------------------------------------------
 
 --
@@ -58,18 +50,6 @@ CREATE TABLE `tipo_usuario` (
   `id` int NOT NULL,
   `tipo` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `tipo_usuario`
---
-
-INSERT INTO `tipo_usuario` (`id`, `tipo`) VALUES
-(5, 'admin'),
-(3, 'empresa'),
-(4, 'estándar'),
-(2, 'institución educativa'),
-(1, 'organización'),
-(6, 'trabajador');
 
 -- --------------------------------------------------------
 
@@ -84,13 +64,6 @@ CREATE TABLE `usuarios` (
   `contraseña` varchar(255) NOT NULL,
   `tipo_usuario_id` int NOT NULL DEFAULT '4'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `nombre`, `correo`, `contraseña`, `tipo_usuario_id`) VALUES
-(1, 'Anotonio Pozas Poveda', 'pozaaah@gmail.com', 'SoyElPozas', 6);
 
 --
 -- Índices para tablas volcadas
@@ -130,13 +103,13 @@ ALTER TABLE `evento`
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas

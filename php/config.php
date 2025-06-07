@@ -1,21 +1,23 @@
 <?php
-// config.php
+// Devuelve una conexión mysqli a la base de datos LyricMenu
+function obtenerConexion() {
+    // Configuración de la base de datos
+    $host = "db";         // Cambia a "db" si usas Docker con ese nombre de servicio
+    $usuario = "root";
+    $password = "test";
+    $baseDatos = "LyricMenu";
 
-// Configuración de la base de datos
-define('DB_HOST', 'localhost'); // o la IP/host de tu servidor MySQL
-define('DB_NAME', 'LyricMenu'); // nombre de la base de datos según tu SQL
-define('DB_USER', 'root');      // tu usuario de MySQL (por defecto suele ser 'root')
-define('DB_PASS', 'test');          // tu contraseña de MySQL (vacía por defecto en XAMPP/MAMP)
+    // Crear conexión
+    $conexion = new mysqli($host, $usuario, $password, $baseDatos);
 
-// Conexión a la base de datos usando PDO
-try {
-    $pdo = new PDO(
-        'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8',
-        DB_USER,
-        DB_PASS
-    );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die('Error de conexión: ' . $e->getMessage());
+    // Comprobar conexión
+    if ($conexion->connect_error) {
+        die("Error de conexión: " . $conexion->connect_error);
+    }
+
+    // Establecer charset a utf8mb4 para compatibilidad total con emojis y caracteres especiales
+    $conexion->set_charset("utf8mb4");
+
+    return $conexion;
 }
 ?>

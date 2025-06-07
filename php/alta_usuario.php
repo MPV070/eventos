@@ -4,7 +4,11 @@ $conexion = obtenerConexion();
 
 // Recoger datos del usuario desde POST (esperando JSON en 'usuario')
 $usuario = json_decode($_POST['usuario']);
+// var_dump($_POST['componente']); // <-- ELIMINADO
 
+if (!$usuario) {
+    responder(null, true, "No se han recibido datos del usuario", $conexion);
+}
 // Sanitizar y preparar los datos
 $nombre = mysqli_real_escape_string($conexion, $usuario->nombre);
 $correo = mysqli_real_escape_string($conexion, $usuario->correo);
@@ -12,8 +16,7 @@ $contraseña = mysqli_real_escape_string($conexion, $usuario->contraseña);
 $tipo_usuario_id = intval($usuario->tipo_usuario_id);
 
 // Insertar usuario en la tabla 'usuarios'
-$sql = "INSERT INTO usuarios (nombre, correo, contraseña, tipo_usuario_id) 
-        VALUES ('$nombre', '$correo', '$contraseña', $tipo_usuario_id);";
+$sql = "INSERT INTO usuarios VALUES (null, '$nombre', '$correo', '$contraseña', $tipo_usuario_id);";
 
 mysqli_query($conexion, $sql);
 

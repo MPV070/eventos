@@ -99,7 +99,7 @@ class Evento {
     }
 }
 
-class LyricMenu {
+class GestorEventos {
     // Alta de usuario
     async altaUsuario(oUsuario) {
         let datos = new FormData();
@@ -111,20 +111,25 @@ class LyricMenu {
         return await respuesta.json();
     }
 
-    // Alta de evento
-    async altaEvento(oEvento) {
+    // Modificar usuario
+    async modificarUsuario(oUsuario) {
         let datos = new FormData();
-        datos.append("evento", JSON.stringify(oEvento));
-        let respuesta = await fetch("php/alta_evento.php", {
+        datos.append("usuario", JSON.stringify(oUsuario));
+        let respuesta = await fetch("php/modificar_usuario.php", {
             method: "POST",
             body: datos
         });
         return await respuesta.json();
     }
 
-    // Obtener todos los eventos
-    async getEventos() {
-        let respuesta = await fetch("php/get_eventos.php");
+    // Borrar usuario
+    async borrarUsuario(idUsuario) {
+        let datos = new FormData();
+        datos.append("id", idUsuario);
+        let respuesta = await fetch("php/borrar_usuario.php", {
+            method: "POST",
+            body: datos
+        });
         return await respuesta.json();
     }
 
@@ -145,22 +150,50 @@ class LyricMenu {
         return await respuesta.json();
     }
 
-    // Borrar usuario por ID
-    async borrarUsuario(idUsuario) {
+    // Alta de evento
+    async altaEvento(oEvento) {
         let datos = new FormData();
-        datos.append("id", idUsuario);
-        let respuesta = await fetch("php/borrar_usuario.php", {
+        datos.append("evento", JSON.stringify(oEvento));
+        let respuesta = await fetch("php/alta_evento.php", {
             method: "POST",
             body: datos
         });
         return await respuesta.json();
     }
 
-    // Modificar usuario
-    async modificarUsuario(oUsuario) {
+    // Modificar evento
+    async modificarEvento(oEvento) {
         let datos = new FormData();
-        datos.append("usuario", JSON.stringify(oUsuario));
-        let respuesta = await fetch("php/modificar_usuario.php", {
+        datos.append("evento", JSON.stringify(oEvento));
+        let respuesta = await fetch("php/modificar_evento.php", {
+            method: "POST",
+            body: datos
+        });
+        return await respuesta.json();
+    }
+
+    // Borrar evento
+    async borrarEvento(idEvento) {
+        let datos = new FormData();
+        datos.append("id", idEvento);
+        let respuesta = await fetch("php/borrar_evento.php", {
+            method: "POST",
+            body: datos
+        });
+        return await respuesta.json();
+    }
+
+    // Obtener todos los eventos
+    async getEventos() {
+        let respuesta = await fetch("php/get_eventos.php");
+        return await respuesta.json();
+    }
+
+    // Buscar evento por ID
+    async buscarEvento(idEvento) {
+        let datos = new FormData();
+        datos.append("id", idEvento);
+        let respuesta = await fetch("php/buscar_evento.php", {
             method: "POST",
             body: datos
         });

@@ -1,9 +1,9 @@
-
-
-// Función para mostrar usuarios
+// Mostrar usuarios en tabla (si existe)
 document.addEventListener('DOMContentLoaded', async function () {
     const tbody = document.getElementById('usuarios-tbody');
-    const response = await fetch('php/retrive_usuario.php');
+    if (!tbody) return;
+
+    const response = await fetch('php/get_usuarios.php');
     const data = await response.json();
 
     if (data && Array.isArray(data.datos)) {
@@ -37,31 +37,40 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 });
 
-// Función para agregar un nuevo usuario
+// Validación de nombre en formulario (si existe)
 document.addEventListener('DOMContentLoaded', function () {
+    const nombreInput = document.getElementById('name');
+    if (nombreInput) {
+        nombreInput.addEventListener('input', function () {
+            if (nombreInput.value.trim() === '') {
+                mostrarAlerta('El nombre es obligatorio.', 'danger');
+            } else {
+                ocultarAlerta();
+            }
+        });
+    }
+
+    // Alta de usuario desde formulario (si existe)
     const form = document.querySelector('form');
-    if (!form) return; // Solo ejecuta si hay formulario
+    if (!form) return;
 
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         const nombre = document.getElementById('name').value.trim();
-        const correo = document.getElementById('exampleInputEmail1').value.trim();
-        const contraseña = document.getElementById('exampleInputPassword1').value;
-        const organizador = document.getElementById('organizadorEventos').checked;
+        const correo = document.getElementById('email').value.trim();
+        const contraseña = document.getElementById('password').value;
+        const organizador = document.getElementById('organizadorEventos')?.checked || false;
 
-        // Determina el tipo de usuario
         let tipo_usuario_id = organizador ? 1 : 4; // 1 = Organización, 4 = Estándar
 
-        // Validación básica
         if (!nombre || !correo || !contraseña) {
             mostrarAlerta('Por favor, completa todos los campos.', 'danger');
             return;
         }
 
-        // Usa la clase Usuario y LyricMenu
         const usuario = new Usuario(null, nombre, correo, contraseña, tipo_usuario_id);
-        const lyricMenu = new LyricMenu();
+       const lyricMenu = new GestorEventos();
 
         try {
             const result = await lyricMenu.altaUsuario(usuario);
@@ -69,19 +78,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 mostrarAlerta('Usuario registrado correctamente.', 'success');
                 form.reset();
             } else {
+                console.error('Error al registrar usuario:', result.mensaje || result);
                 mostrarAlerta(result.mensaje || 'Error al registrar usuario.', 'danger');
             }
         } catch (error) {
+            console.error('Error de conexión con el servidor:', error);
             mostrarAlerta('Error de conexión con el servidor.', 'danger');
         }
     });
 
     function mostrarAlerta(mensaje, tipo) {
-        const alertContainer = document.getElementById('alert-container');
-        alertContainer.innerHTML = `
-            <div class="alert alert-${tipo}" role="alert">
-                ${mensaje}
-            </div>
-        `;
+        const alertContainer = document.getElementById('alert_container');
+        if (alertContainer) {
+            alertContainer.innerHTML = `
+                <div class="alert alert-${tipo}" role="alert">
+                    ${mensaje}
+                </div>
+            `;
+        }
+    }
+
+    function ocultarAlerta() {
+        const alertContainer = document.getElementById('alert_container');
+        if (alertContainer) {
+            alertContainer.innerHTML = '';
+        }
     }
 });

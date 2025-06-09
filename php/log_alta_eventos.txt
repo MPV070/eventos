@@ -2,3 +2,11 @@
 SQL: INSERT INTO eventos (nombre, url_imagen, descripcion, ubicacion, fecha, hora, precio, plazas_disponibles, plazas_totales) VALUES ('grg', 'https://th.bing.com/th/id/OIP.hr4jumCaH54-6AHcCG5mDQHaEw?rs=1&pid=ImgDetMain', 'grg', 'new york', '2025-06-13', '13:00', 34, 56, 56);
 2025-06-09 08:00:15
 INSERT OK
+2025-06-09 08:46:25
+SQL: INSERT INTO eventos (nombre, url_imagen, descripcion, ubicacion, fecha, hora, precio, plazas_disponibles, plazas_totales) VALUES ('jmyum', 'https://th.bing.com/th/id/OIP.hr4jumCaH54-6AHcCG5mDQHaEw?rs=1&pid=ImgDetMain', 'vbet5', 'bg34b5', '2025-06-13', '15:51', 34, 56, 56);
+2025-06-09 08:46:25
+INSERT OK
+2025-06-09 08:49:27
+SQL: INSERT INTO eventos (nombre, url_imagen, descripcion, ubicacion, fecha, hora, precio, plazas_disponibles, plazas_totales) VALUES ('La bohème', 'https://th.bing.com/th/id/OIP.hr4jumCaH54-6AHcCG5mDQHaEw?rs=1&pid=ImgDetMain', 'rt', 'bg34b5', '2025-06-13', '13:49', 34, 56, 56);
+2025-06-09 08:49:27
+INSERT OK

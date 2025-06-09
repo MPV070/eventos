@@ -65,3 +65,68 @@ document.addEventListener('DOMContentLoaded', async function () {
         tbody.innerHTML = `<tr><td colspan="11">No hay eventos en la base de datos.</td></tr>`;
     }
 });
+
+// --- Toast Bootstrap ---
+function mostrarToast(mensaje, titulo = 'Aviso', tipo = 'bg-success') {
+  const toastEl = document.getElementById('liveToast');
+  const toastHeader = toastEl.querySelector('.toast-header');
+  const toastBody = toastEl.querySelector('.toast-body');
+  // Limpia el header y añade título y botón de cierre
+  toastHeader.innerHTML = `<strong class='me-auto'>${titulo}</strong><button type='button' class='btn-close' data-bs-dismiss='toast' aria-label='Close'></button>`;
+  toastBody.textContent = mensaje;
+  toastEl.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'bg-info');
+  toastEl.classList.add(tipo);
+  const toast = new bootstrap.Toast(toastEl);
+  toast.show();
+}
+
+// --- Envío de formulario de registro de evento ---
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.querySelector('form');
+  if (!form) return;
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    // Recoge los datos del formulario
+    const nombre = document.getElementById('eventName')?.value.trim();
+    const url_imagen = document.getElementById('eventImg')?.value.trim();
+    const descripcion = document.getElementById('eventDescription')?.value.trim();
+    const ubicacion = document.getElementById('eventLocation')?.value.trim();
+    const fecha = document.getElementById('eventDate')?.value;
+    const hora = document.getElementById('eventTime')?.value;
+    const precio = document.getElementById('eventPrice')?.value;
+    const plazas_totales = document.getElementById('eventSeats')?.value;
+    // Validación mínima
+    if (!nombre || !url_imagen || !descripcion || !ubicacion || !fecha || !hora || !precio || !plazas_totales) {
+      mostrarToast('Por favor, completa todos los campos.', 'Error', 'bg-danger');
+      return;
+    }
+    // Prepara el objeto evento usando la clase Evento
+    const evento = Evento.fromFormFields({
+      nombre,
+      url_imagen,
+      descripcion,
+      ubicacion,
+      fecha,
+      hora,
+      precio,
+      plazas_totales
+    });
+    try {
+      const formData = new FormData();
+      formData.append('evento', JSON.stringify(evento.toJSON()));
+      const response = await fetch('php/alta_eventos.php', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await response.json();
+      if (!data.error) {
+        mostrarToast('Se ha registrado el evento', 'Éxito', 'bg-success');
+        form.reset();
+      } else {
+        mostrarToast('No se ha podido registrar el evento', 'Error', 'bg-danger');
+      }
+    } catch (err) {
+      mostrarToast('No se ha podido registrar el evento', 'Error', 'bg-danger');
+    }
+  });
+});

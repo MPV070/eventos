@@ -1,0 +1,4 @@
+2025-06-09 08:00:15
+SQL: INSERT INTO eventos (nombre, url_imagen, descripcion, ubicacion, fecha, hora, precio, plazas_disponibles, plazas_totales) VALUES ('grg', 'https://th.bing.com/th/id/OIP.hr4jumCaH54-6AHcCG5mDQHaEw?rs=1&pid=ImgDetMain', 'grg', 'new york', '2025-06-13', '13:00', 34, 56, 56);
+2025-06-09 08:00:15
+INSERT OK

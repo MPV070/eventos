@@ -97,6 +97,12 @@ class Evento {
             plazas_totales: this.#plazas_totales
         };
     }
+
+    static fromFormFields({nombre, url_imagen, descripcion, ubicacion, fecha, hora, precio, plazas_totales}) {
+        return new Evento(
+            null, nombre, url_imagen, descripcion, ubicacion, fecha, hora, precio, plazas_totales, plazas_totales
+        );
+    }
 }
 
 class GestorEventos {

@@ -16,21 +16,24 @@ $ubicacion = mysqli_real_escape_string($conexion, $evento->ubicacion);
 $fecha = mysqli_real_escape_string($conexion, $evento->fecha);
 $hora = mysqli_real_escape_string($conexion, $evento->hora);
 $precio = floatval($evento->precio);
-$plazas_disponibles = intval($evento->plazas_disponibles);
 $plazas_totales = intval($evento->plazas_totales);
+$plazas_disponibles = $plazas_totales;
 
 // Insertar evento en la tabla 'eventos'
-$sql = "INSERT INTO eventos VALUES (null, '$nombre', '$url_imagen', '$descripcion', '$ubicacion', '$fecha', '$hora', $precio, $plazas_disponibles, $plazas_totales);";
+$sql = "INSERT INTO eventos (nombre, url_imagen, descripcion, ubicacion, fecha, hora, precio, plazas_disponibles, plazas_totales) VALUES ('$nombre', '$url_imagen', '$descripcion', '$ubicacion', '$fecha', '$hora', $precio, $plazas_disponibles, $plazas_totales);";
 
-mysqli_query($conexion, $sql);
+// Verificador/log para depuración
+file_put_contents(__DIR__ . '/log_alta_eventos.txt', date('Y-m-d H:i:s') . "\nSQL: $sql\n", FILE_APPEND);
 
-if (mysqli_errno($conexion) != 0) {
+$result = mysqli_query($conexion, $sql);
+
+if (!$result) {
     $numerror = mysqli_errno($conexion);
     $descrerror = mysqli_error($conexion);
-
+    file_put_contents(__DIR__ . '/log_alta_eventos.txt', date('Y-m-d H:i:s') . "\nERROR $numerror: $descrerror\n", FILE_APPEND);
     responder(null, true, "Se ha producido un error número $numerror que corresponde a: $descrerror <br>", $conexion);
-
 } else {
+    file_put_contents(__DIR__ . '/log_alta_eventos.txt', date('Y-m-d H:i:s') . "\nINSERT OK\n", FILE_APPEND);
     responder(null, false, "Se ha dado de alta el evento correctamente", $conexion);
 }
 

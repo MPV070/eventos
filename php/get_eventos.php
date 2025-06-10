@@ -6,8 +6,25 @@ error_reporting(E_ALL);
 include_once("config.php");
 $conexion = obtenerConexion();
 
-// Obtener todos los eventos
-$sql = "SELECT * FROM eventos;";
+// Obtener filtros de precio si existen
+$id = isset($_GET['id']) ? intval($_GET['id']) : null;
+$precio_min = isset($_GET['precio_min']) ? floatval($_GET['precio_min']) : null;
+$precio_max = isset($_GET['precio_max']) ? floatval($_GET['precio_max']) : null;
+
+// Construir consulta SQL con filtros SOLO para los campos generales
+$sql = "SELECT id, nombre, url_imagen, descripcion, ubicacion, precio FROM eventos WHERE 1=1";
+if ($id !== null && $id > 0) {
+    $sql .= " AND id = " . $id;
+} else {
+    if ($precio_min !== null && $precio_min !== '') {
+        $sql .= " AND precio >= " . $precio_min;
+    }
+    if ($precio_max !== null && $precio_max !== '') {
+        $sql .= " AND precio <= " . $precio_max;
+    }
+}
+$sql .= ";";
+
 $resultado = mysqli_query($conexion, $sql);
 
 if (!$resultado) {

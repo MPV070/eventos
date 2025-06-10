@@ -84,7 +84,7 @@
       </button>
     </div>
 
-    <!-- Tarjetas de eventos destacados -->
+    <!-- Contenedor de tarjetas de eventos destacados -->
     <div class="container mt-4">
       <div class="row g-3" id="eventos-cards-row">
         <!-- Aquí se insertarán las cards dinámicamente con JS -->
@@ -94,7 +94,36 @@
     <!-- Alert container -->
     <div id="alert_container" class="mt-4"></div>
 
-         
+    <!-- Modal para registro/reserva de pase -->
+    <div class="modal fade" id="modalRegistroReserva" tabindex="-1" aria-labelledby="modalRegistroReservaLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalRegistroReservaLabel">Reservar Pase</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <form id="formReservaPase">
+            <div class="modal-body">
+              <input type="hidden" id="paseIdReserva" name="pase_id">
+              <div class="mb-3">
+                <label for="usuarioCorreoReserva" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="usuarioCorreoReserva" name="usuario_correo" required>
+              </div>
+              <div class="mb-3">
+                <label for="usuarioPassReserva" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="usuarioPassReserva" name="usuario_pass" required>
+              </div>
+              <div id="reservaMensaje"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Comprar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <footer class="bg-dark text-white text-center py-4 mt-5 bottom-centered">
       <div class="container">
         <p class="mb-1">© 2025 Lyric Menu. Todos los derechos reservados.</p>
@@ -113,6 +142,7 @@
     <script src="js/eventos.js"></script>
     <script src="js/usuarios.js"></script>
     <script src="js/objetos.js"></script>
-    <script srce=""></script>
+    <script src="js/ajax.js"></script>
   </body>
 </html>
+

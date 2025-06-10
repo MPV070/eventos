@@ -42,23 +42,15 @@ class Evento {
     #url_imagen;
     #descripcion;
     #ubicacion;
-    #fecha;
-    #hora;
     #precio;
-    #plazas_disponibles;
-    #plazas_totales;
 
-    constructor(id, nombre, url_imagen, descripcion, ubicacion, fecha, hora, precio, plazas_disponibles, plazas_totales) {
+    constructor(id, nombre, url_imagen, descripcion, ubicacion, precio) {
         this.#id = id;
         this.#nombre = nombre;
         this.#url_imagen = url_imagen;
         this.#descripcion = descripcion;
         this.#ubicacion = ubicacion;
-        this.#fecha = fecha;
-        this.#hora = hora;
         this.#precio = precio;
-        this.#plazas_disponibles = plazas_disponibles;
-        this.#plazas_totales = plazas_totales;
     }
 
     get id() { return this.#id; }
@@ -66,22 +58,14 @@ class Evento {
     get url_imagen() { return this.#url_imagen; }
     get descripcion() { return this.#descripcion; }
     get ubicacion() { return this.#ubicacion; }
-    get fecha() { return this.#fecha; }
-    get hora() { return this.#hora; }
     get precio() { return this.#precio; }
-    get plazas_disponibles() { return this.#plazas_disponibles; }
-    get plazas_totales() { return this.#plazas_totales; }
 
     set id(id) { this.#id = id; }
     set nombre(nombre) { this.#nombre = nombre; }
     set url_imagen(url_imagen) { this.#url_imagen = url_imagen; }
     set descripcion(descripcion) { this.#descripcion = descripcion; }
     set ubicacion(ubicacion) { this.#ubicacion = ubicacion; }
-    set fecha(fecha) { this.#fecha = fecha; }
-    set hora(hora) { this.#hora = hora; }
     set precio(precio) { this.#precio = precio; }
-    set plazas_disponibles(plazas_disponibles) { this.#plazas_disponibles = plazas_disponibles; }
-    set plazas_totales(plazas_totales) { this.#plazas_totales = plazas_totales; }
 
     toJSON() {
         return {
@@ -90,18 +74,12 @@ class Evento {
             url_imagen: this.#url_imagen,
             descripcion: this.#descripcion,
             ubicacion: this.#ubicacion,
-            fecha: this.#fecha,
-            hora: this.#hora,
-            precio: this.#precio,
-            plazas_disponibles: this.#plazas_disponibles,
-            plazas_totales: this.#plazas_totales
+            precio: this.#precio
         };
     }
 
-    static fromFormFields({nombre, url_imagen, descripcion, ubicacion, fecha, hora, precio, plazas_totales}) {
-        return new Evento(
-            null, nombre, url_imagen, descripcion, ubicacion, fecha, hora, precio, plazas_totales, plazas_totales
-        );
+    static fromFormFields({nombre, url_imagen, descripcion, ubicacion, precio}) {
+        return new Evento(null, nombre, url_imagen, descripcion, ubicacion, precio);
     }
 }
 

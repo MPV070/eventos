@@ -8,7 +8,7 @@ async function cargarYRenderizarEventos() {
 
     if (data && Array.isArray(data.datos)) {
         tbody.innerHTML = '';
-        data.datos.forEach((evento, idx) => {
+        for (const evento of data.datos) {
             // Formatear fecha a dd/mm/aaaa de forma robusta
             let fechaFormateada = evento.fecha;
             if (fechaFormateada) {
@@ -20,6 +20,23 @@ async function cargarYRenderizarEventos() {
                     fechaFormateada = `${day}/${month}/${year}`;
                 }
             }
+            // Obtener los pases por AJAX de forma síncrona (para cada evento)
+            let pasesHtml = '<span class="text-muted">Cargando...</span>';
+            try {
+                const pasesResp = await fetch(`php/get_pases.php?evento_id=${evento.id}`);
+                const pasesData = await pasesResp.json();
+                if (pasesData.success && pasesData.pases.length) {
+                    pasesHtml = '<ul class="list-unstyled mb-0">';
+                    pasesData.pases.forEach(pase => {
+                        pasesHtml += `<li><span class='badge bg-secondary me-1'>${pase.fecha}</span> <span class='badge bg-info'>${pase.hora}</span></li>`;
+                    });
+                    pasesHtml += '</ul>';
+                } else {
+                    pasesHtml = '<span class="text-danger">Sin pases</span>';
+                }
+            } catch (e) {
+                pasesHtml = '<span class="text-danger">Error</span>';
+            }
             tbody.innerHTML += `
                 <tr data-evento-id="${evento.id}">
                     <td class="d-none d-sm-table-cell">${evento.id}</td>
@@ -30,7 +47,8 @@ async function cargarYRenderizarEventos() {
                     <td class="d-none d-sm-table-cell">${fechaFormateada}</td>
                     <td class="d-none d-sm-table-cell">${evento.hora}</td>
                     <td class="d-none d-sm-table-cell">${evento.precio}€</td>
-                    <td class="d-none d-sm-table-cell">${evento.plazas_disponibles}</td>
+                    <td class="d-none d-sm-table-cell">${evento.plazas_disponibles}/${evento.plazas_totales}</td>
+                    <td class="d-none d-sm-table-cell">${pasesHtml}</td>
                     <td class="d-none d-sm-table-cell">
                         <button class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i> Editar</button>
                         <button class="btn btn-danger btn-sm btn-eliminar-evento"><i class="bi bi-trash"></i> Eliminar</button>
@@ -51,14 +69,15 @@ async function cargarYRenderizarEventos() {
                                 <strong>Fecha:</strong> ${fechaFormateada}<br>
                                 <strong>Hora:</strong> ${evento.hora}<br>
                                 <strong>Precio:</strong> ${evento.precio}€<br>
-                                <strong>Plazas disponibles:</strong> ${evento.plazas_disponibles}<br>
+                                <strong>Plazas:</strong> ${evento.plazas_disponibles}/${evento.plazas_totales}<br>
+                                <strong>Pases:</strong> ${pasesHtml}
                                 <button class="btn btn-primary btn-sm mt-2"><i class="bi bi-pencil"></i> Editar</button>
                                 <button class="btn btn-danger btn-sm mt-2 btn-eliminar-evento"><i class="bi bi-trash"></i> Eliminar</button>
                             </div>
                         </div>
                     </td>
                 </tr>`;
-        });
+        }
         // Re-bindea los botones eliminar
         tbody.querySelectorAll('.btn-eliminar-evento').forEach(btn => {
             btn.addEventListener('click', async function (e) {
@@ -89,8 +108,75 @@ async function cargarYRenderizarEventos() {
                 }
             });
         });
+        // --- NUEVO: Inicializa popovers para los botones "Ver pases" ---
+        tbody.querySelectorAll('.btn-ver-pases').forEach(btn => {
+            btn.addEventListener('click', async function (e) {
+                e.preventDefault();
+                const eventoId = btn.getAttribute('data-evento-id');
+                btn.setAttribute('data-bs-content', 'Cargando...');
+                btn.setAttribute('data-bs-toggle', 'popover');
+                if (btn._popoverInstance) {
+                    btn._popoverInstance.dispose();
+                }
+                // Carga los pases por AJAX
+                const response = await fetch(`php/get_pases.php?evento_id=${eventoId}`);
+                const data = await response.json();
+                let html = '';
+                if (data.success && data.pases.length) {
+                    html += '<div class="list-group">';
+                    data.pases.forEach(pase => {
+                        html += `<button type=\"button\" class=\"list-group-item list-group-item-action pase-popover-item\" data-pase-id=\"${pase.id}\">${pase.fecha} ${pase.hora}</button>`;
+                    });
+                    html += '</div>';
+                } else {
+                    html = '<span class="text-danger">No hay pases disponibles</span>';
+                }
+                btn.setAttribute('data-bs-content', html);
+                // Inicializa el popover SIEMPRE (aunque ya exista uno)
+                btn._popoverInstance = new bootstrap.Popover(btn, {
+                    html: true,
+                    content: html,
+                    placement: 'bottom',
+                    trigger: 'focus',
+                    sanitize: false
+                });
+                btn._popoverInstance.show();
+            });
+        });
+        // --- NUEVO: Delegación para click en pase dentro del popover ---
+        document.body.addEventListener('click', function(e) {
+            if (e.target.classList.contains('pase-popover-item')) {
+                const paseId = e.target.getAttribute('data-pase-id');
+                // Cierra todos los popovers
+                document.querySelectorAll('.btn-ver-pases').forEach(b => {
+                    if (b._popoverInstance) b._popoverInstance.hide();
+                });
+                mostrarModalReserva(paseId);
+            }
+        });
     } else {
         tbody.innerHTML = `<tr><td colspan="11">No hay eventos en la base de datos.</td></tr>`;
+    }
+}
+
+// --- NUEVO: Modal de reserva para pase ---
+function mostrarModalReserva(paseId) {
+    // Puedes personalizar este modal según tu HTML
+    const usuarioId = prompt("Introduce tu ID de usuario para reservar:");
+    if (!usuarioId) return;
+    reservarPase(paseId, usuarioId);
+}
+
+async function reservarPase(paseId, usuarioId) {
+    const formData = new FormData();
+    formData.append('pase_id', paseId);
+    formData.append('usuario_id', usuarioId);
+    const response = await fetch('php/reservar_pase.php', { method: 'POST', body: formData });
+    const data = await response.json();
+    alert(data.message);
+    if (data.success) {
+        // Opcional: recargar los pases para actualizar plazas
+        // cargarYRenderizarEventos();
     }
 }
 
@@ -167,9 +253,49 @@ document.addEventListener('DOMContentLoaded', function () {
 // --- Filtro de eventos por nombre ---
 document.addEventListener('DOMContentLoaded', function () {
   const inputBusqueda = document.getElementById('busqueda-eventos');
-  if (!inputBusqueda) return;
+  const idBusqueda = document.getElementById('busqueda-id-evento');
+  const precioMinInput = document.getElementById('precio-min');
+  const precioMaxInput = document.getElementById('precio-max');
+  const btnFiltrar = document.getElementById('btn-filtrar-precio');
+  if (!inputBusqueda || !idBusqueda || !precioMinInput || !precioMaxInput || !btnFiltrar) return;
 
   let eventosCache = [];
+
+  // Función para cargar eventos con filtros
+  async function cargarEventosFiltrados() {
+    const nombre = inputBusqueda.value.trim();
+    const id = idBusqueda.value.trim();
+    const precioMin = precioMinInput.value;
+    const precioMax = precioMaxInput.value;
+    let url = 'php/get_eventos.php?';
+    if (id) {
+      url += `id=${encodeURIComponent(id)}&`;
+    } else {
+      if (precioMin) url += `precio_min=${encodeURIComponent(precioMin)}&`;
+      if (precioMax) url += `precio_max=${encodeURIComponent(precioMax)}&`;
+    }
+    const response = await fetch(url);
+    const data = await response.json();
+    eventosCache = data && Array.isArray(data.datos) ? data.datos : [];
+    // Si hay filtro por nombre, filtra en el cliente
+    let filtrados = eventosCache;
+    if (nombre) {
+      filtrados = filtrados.filter(ev => ev.nombre && ev.nombre.toLowerCase().includes(nombre.toLowerCase()));
+    }
+    renderizarEventos(filtrados);
+  }
+
+  btnFiltrar.addEventListener('click', function (e) {
+    e.preventDefault();
+    cargarEventosFiltrados();
+  });
+
+  idBusqueda.addEventListener('input', function () {
+    if (idBusqueda.value) {
+      precioMinInput.value = '';
+      precioMaxInput.value = '';
+    }
+  });
 
   // Sobrescribe la función de cargar eventos para cachear los datos
   const originalCargarYRenderizarEventos = window.cargarYRenderizarEventos;
@@ -213,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <td class="d-none d-sm-table-cell">${fechaFormateada}</td>
           <td class="d-none d-sm-table-cell">${evento.hora}</td>
           <td class="d-none d-sm-table-cell">${evento.precio}€</td>
-          <td class="d-none d-sm-table-cell">${evento.plazas_disponibles}</td>
+          <td class="d-none d-sm-table-cell">${evento.plazas_disponibles}/${evento.plazas_totales}</td>
           <td class="d-none d-sm-table-cell">
             <button class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i> Editar</button>
             <button class="btn btn-danger btn-sm btn-eliminar-evento"><i class="bi bi-trash"></i> Eliminar</button>
@@ -234,7 +360,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <strong>Fecha:</strong> ${fechaFormateada}<br>
                 <strong>Hora:</strong> ${evento.hora}<br>
                 <strong>Precio:</strong> ${evento.precio}€<br>
-                <strong>Plazas disponibles:</strong> ${evento.plazas_disponibles}<br>
+                <strong>Plazas:</strong> ${evento.plazas_disponibles}/${evento.plazas_totales}<br>
+                <strong>Pases:</strong> ${pasesHtml}
                 <button class="btn btn-primary btn-sm mt-2"><i class="bi bi-pencil"></i> Editar</button>
                 <button class="btn btn-danger btn-sm mt-2 btn-eliminar-evento"><i class="bi bi-trash"></i> Eliminar</button>
               </div>
@@ -271,6 +398,56 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     });
+    // --- NUEVO: Re-bindea los botones editar evento ---
+    tbody.querySelectorAll('.btn-primary').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const tr = btn.closest('tr[data-evento-id]');
+        const eventoId = tr ? tr.getAttribute('data-evento-id') : null;
+        if (!eventoId) return;
+        // Busca el evento en eventosCache (si existe) o en la tabla
+        let evento = null;
+        if (typeof eventosCache !== 'undefined' && Array.isArray(eventosCache)) {
+          evento = eventosCache.find(ev => String(ev.id) === String(eventoId));
+        }
+        if (!evento) {
+          // Si no hay cache, busca en la fila
+          const tds = tr.querySelectorAll('td');
+          evento = {
+            id: eventoId,
+            nombre: tds[1]?.textContent || '',
+            url_imagen: tds[2]?.querySelector('img')?.src || '',
+            descripcion: tds[3]?.textContent || '',
+            ubicacion: tds[4]?.textContent || '',
+            fecha: tds[5]?.textContent || '',
+            hora: tds[6]?.textContent || '',
+            precio: (tds[7]?.textContent || '').replace('€',''),
+            plazas_disponibles: tds[8]?.textContent || '',
+            plazas_totales: '' // No está en la tabla, pero se puede cargar si es necesario
+          };
+        }
+        // Rellena el modal
+        document.getElementById('editarEventoId').value = evento.id;
+        document.getElementById('editarEventoNombre').value = evento.nombre;
+        document.getElementById('editarEventoUrlImagen').value = evento.url_imagen;
+        document.getElementById('editarEventoDescripcion').value = evento.descripcion;
+        document.getElementById('editarEventoUbicacion').value = evento.ubicacion;
+        // Fecha en formato yyyy-mm-dd
+        let fecha = evento.fecha;
+        if (fecha && fecha.includes('/')) {
+          // Si está en formato dd/mm/yyyy, conviértelo
+          const [d, m, y] = fecha.split('/');
+          fecha = `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
+        }
+        document.getElementById('editarEventoFecha').value = fecha;
+        document.getElementById('editarEventoHora').value = evento.hora;
+        document.getElementById('editarEventoPrecio').value = evento.precio;
+        document.getElementById('editarEventoPlazasDisponibles').value = evento.plazas_disponibles;
+        document.getElementById('editarEventoPlazasTotales').value = evento.plazas_totales;
+        // Muestra el modal
+        const modal = new bootstrap.Modal(document.getElementById('modalEditarEvento'));
+        modal.show();
+      });
+    });
   }
 
   // Filtro en tiempo real
@@ -286,4 +463,81 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Carga inicial
   window.cargarYRenderizarEventos();
+});
+
+// --- Lógica para guardar cambios del modal de edición de evento ---
+document.addEventListener('DOMContentLoaded', function () {
+  const formEditar = document.getElementById('formEditarEvento');
+  if (!formEditar) return;
+  formEditar.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const id = document.getElementById('editarEventoId').value;
+    const nombre = document.getElementById('editarEventoNombre').value.trim();
+    const url_imagen = document.getElementById('editarEventoUrlImagen').value.trim();
+    const descripcion = document.getElementById('editarEventoDescripcion').value.trim();
+    const ubicacion = document.getElementById('editarEventoUbicacion').value.trim();
+    const fecha = document.getElementById('editarEventoFecha').value;
+    const hora = document.getElementById('editarEventoHora').value;
+    const precio = document.getElementById('editarEventoPrecio').value;
+    const plazas_disponibles = document.getElementById('editarEventoPlazasDisponibles').value;
+    const plazas_totales = document.getElementById('editarEventoPlazasTotales').value;
+    const errorDiv = document.getElementById('plazasDisponiblesError');
+    // --- Validación de plazas ---
+    if (parseInt(plazas_disponibles, 10) > parseInt(plazas_totales, 10)) {
+      errorDiv.classList.remove('d-none');
+      document.getElementById('editarEventoPlazasDisponibles').focus();
+      return;
+    }
+    if (!id || !nombre || !url_imagen || !descripcion || !ubicacion || !fecha || !hora || !precio || !plazas_disponibles || !plazas_totales) {
+      mostrarToast('Todos los campos son obligatorios.', 'Error', 'bg-danger');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('nombre', nombre);
+    formData.append('url_imagen', url_imagen);
+    formData.append('descripcion', descripcion);
+    formData.append('ubicacion', ubicacion);
+    formData.append('fecha', fecha);
+    formData.append('hora', hora);
+    formData.append('precio', precio);
+    formData.append('plazas_disponibles', plazas_disponibles);
+    formData.append('plazas_totales', plazas_totales);
+    try {
+      const response = await fetch('php/editar_evento.php', {
+        method: 'POST',
+        body: formData
+      });
+      const res = await response.json();
+      if (res.success) {
+        mostrarToast('Evento editado correctamente.', 'Éxito', 'bg-success');
+        const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditarEvento'));
+        modal.hide();
+        window.cargarYRenderizarEventos && window.cargarYRenderizarEventos();
+      } else {
+        mostrarToast(res.message || 'No se pudo editar el evento', 'Error', 'bg-danger');
+      }
+    } catch (err) {
+      mostrarToast('Error inesperado al editar el evento', 'Error', 'bg-danger');
+    }
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const plazasDisponiblesInput = document.getElementById('editarEventoPlazasDisponibles');
+  const plazasTotalesInput = document.getElementById('editarEventoPlazasTotales');
+  const errorDiv = document.getElementById('plazasDisponiblesError');
+  if (plazasDisponiblesInput && plazasTotalesInput && errorDiv) {
+    function validarPlazas() {
+      const disponibles = parseInt(plazasDisponiblesInput.value, 10);
+      const totales = parseInt(plazasTotalesInput.value, 10);
+      if (!isNaN(disponibles) && !isNaN(totales) && disponibles > totales) {
+        errorDiv.classList.remove('d-none');
+      } else {
+        errorDiv.classList.add('d-none');
+      }
+    }
+    plazasDisponiblesInput.addEventListener('input', validarPlazas);
+    plazasTotalesInput.addEventListener('input', validarPlazas);
+  }
 });
